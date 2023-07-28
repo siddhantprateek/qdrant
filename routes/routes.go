@@ -2,8 +2,10 @@ package routes
 
 import (
 	"qdrant/config"
+	handlers "qdrant/handlers"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 func apiRoutes(routes *fiber.App) {
@@ -13,12 +15,14 @@ func apiRoutes(routes *fiber.App) {
 			"message": "Qdrant App Server is Healthy.",
 		})
 	})
+
+	routes.Get("/all", handlers.GetAllCollection)
 }
 
 func Init() error {
 
 	app := fiber.New()
-
+	app.Use(logger.New())
 	apiRoutes(app)
 
 	port := config.GetEnviron("PORT")
