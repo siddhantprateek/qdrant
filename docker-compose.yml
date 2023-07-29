@@ -32,6 +32,19 @@ services:
     volumes:
       - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
       - grafana:/var/lib/grafana
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    container_name: qdback
+    environment:
+      PORT: ${PORT}
+    ports:
+      - 8000:8000
+    depends_on:
+      - qdrant
+    restart: always
+  
 
 
 volumes:
