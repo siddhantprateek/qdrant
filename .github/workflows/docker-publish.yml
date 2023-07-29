@@ -24,7 +24,7 @@ jobs:
         with:
           images: siddhantprateek/qdapi
       
-      - name: Build and push Docker image 
+      - name: Build and push Docker image with 'latest' tag
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
           image: siddhantprateek/qdapi
@@ -32,5 +32,7 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          tags: ${{ steps.metadata.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            latest
+            ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
