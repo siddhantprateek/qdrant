@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: qdapi
+  namespace: monitoring
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: qdapi
@@ -14,9 +16,10 @@ spec:
       containers:
       - name: qdapi
         image: siddhantprateek/qdapi
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
-        - containerPort: 8000
+        - containerPort: 80
+        env:
+        - name: QDRANT_ADDR
+          value: qdrant:6334
+        - name: PORT
+          value: "80"
