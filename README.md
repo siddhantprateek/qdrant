@@ -20,3 +20,5 @@ The objectives of this task are as follows:
 - `Qdrant` - Vector Database
 - `Terraform` - Infra-structure as Code (IaC)
 - `Aws` - Cloud Provider
+- `Kube-Prometheus` deploys the Prometheus Operator and already schedules a Prometheus
+called prometheus-k8s with alerts and rules by default.
