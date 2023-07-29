@@ -81,6 +81,11 @@ spec:
           storage: 10Gi
 ```
 
+```bash
+docker build --tag qdapi .
+docker run -p 8000:8000 -e PORT=8000 -e QDRANT_ADDR=qdrant:6334 -d qdapi
+```
+
 
 ```bash
 $ kubectl --namespace monitoring port-forward svc/prometheus-k8s 10000:9090 >/dev/null &
