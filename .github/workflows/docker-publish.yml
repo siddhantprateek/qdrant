@@ -33,7 +33,5 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          tags: |
-            latest
-            ${{ steps.metadata.outputs.tags }}
+          tags: latest
           labels: ${{ steps.meta.outputs.labels }}
