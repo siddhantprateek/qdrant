@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	pb "github.com/qdrant/go-client/qdrant"
@@ -24,6 +25,11 @@ func QdrantDBConn() (
 	context.Context,
 	context.CancelFunc) {
 	flag.Parse()
+
+	qdrantAddr := os.Getenv("QDRANT_ADDR")
+	if qdrantAddr != "" {
+		addr = &qdrantAddr
+	}
 
 	conn, err := grpc.Dial(*addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
