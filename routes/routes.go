@@ -19,6 +19,9 @@ func apiRoutes(routes *fiber.App) {
 	routes.Get("/all", handlers.GetAllCollection)
 	routes.Post("/collection/create", handlers.CreateCollection)
 	routes.Post("/field/create", handlers.CreateField)
+	routes.Post("/upsert", handlers.AddVectorData)
+	routes.Post("/data/id", handlers.RetrieveById)
+	routes.Delete("/collection/delete", handlers.DeleteVectorCollection)
 }
 
 func Init() error {

@@ -3,11 +3,11 @@
 ## Objective
 
 The objectives of this task are as follows:
-- [ ] Create a highly scalable Qdrant vector database hosted on AWS. _in progress_
+- [x] Create a highly scalable Qdrant vector database hosted on AWS.
 - [ ] Have automatic snapshotting and backup options available. _in progress_
 - [x] Have a recovery mechanism from backup for the database.
 - [ ] Develop an efficient mechanism to ingest around 1 million records in the database.
-- [ ] Set up observability and performance monitoring with alerts on the system. _in progress_
+- [x] Set up observability and performance monitoring with alerts on the system. _in progress_
 - [ ] Use Terraform to spin up the required resources. _in progress_
 
 
