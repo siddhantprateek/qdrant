@@ -11,6 +11,8 @@ services:
       - 6334:6334 # grpc
     volumes:
       - ./qdrant_data:/qdrant/storage
+    networks:
+      - db
     restart: always
   prometheus:
     image: prom/prometheus:v2.40.4
@@ -40,11 +42,14 @@ services:
       dockerfile: Dockerfile 
     container_name: qdapi
     environment:
-      PORT: ${PORT}
+      QDRANT_ADDR: qdrant:6334
+      PORT: 8000
     ports:
       - 8000:8000
     depends_on:
       - qdrant
+    networks:
+      - db
     restart: always
 
   zookeeper:
@@ -79,3 +84,4 @@ volumes:
 
 networks:
   monitoring:
+  db:
