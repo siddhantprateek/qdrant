@@ -22,12 +22,12 @@ jobs:
         id: metadata
         uses: docker/metadata-action@v4
         with:
-          images: siddhantprateek/landate-backend
+          images: siddhantprateek/qdapi
       
       - name: Build and push Docker image 
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          image: siddhantprateek/landate-backend
+          image: siddhantprateek/qdapi
           push: true
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
