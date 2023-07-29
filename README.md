@@ -80,3 +80,15 @@ spec:
       resources:
           storage: 10Gi
 ```
+
+
+```bash
+$ kubectl --namespace monitoring port-forward svc/prometheus-k8s 10000:9090 >/dev/null &
+[1] 26130
+
+$ kubectl --namespace monitoring port-forward svc/grafana 20000:3000 >/dev/null &
+[2] 26394
+
+$ kubectl --namespace monitoring port-forward svc/alertmanager-main 30000:9093 >/dev/null & 
+[1] 26737
+```
