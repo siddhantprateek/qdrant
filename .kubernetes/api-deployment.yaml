@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qdapi
+spec:
+  selector:
+    matchLabels:
+      app: qdapi
+  template:
+    metadata:
+      labels:
+        app: qdapi
+    spec:
+      containers:
+      - name: qdapi
+        image: siddhantprateek/qdapi
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000

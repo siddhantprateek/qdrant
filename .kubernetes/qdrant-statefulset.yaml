@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: qdrant-db
+  namespace: monitoring
 spec:
   selector:
     matchLabels:

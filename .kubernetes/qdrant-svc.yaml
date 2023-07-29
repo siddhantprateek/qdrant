@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: qdrant-db-service
+  namespace: monitoring
+spec:
+  selector:
+    app: qdrant-db
+  ports:
+    - name: web
+      protocol: TCP
+      port: 80
+      targetPort: 6333
+    - name: grpc
+      protocol: TCP
+      port: 9000
+      targetPort: 6334
