@@ -17,6 +17,8 @@ func apiRoutes(routes *fiber.App) {
 	})
 
 	routes.Get("/all", handlers.GetAllCollection)
+	routes.Post("/collection/create", handlers.CreateCollection)
+	routes.Post("/field/create", handlers.CreateField)
 }
 
 func Init() error {
