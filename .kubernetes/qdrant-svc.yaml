@@ -9,9 +9,9 @@ spec:
   ports:
     - name: web
       protocol: TCP
-      port: 80
+      port: 6333
       targetPort: 6333
     - name: grpc
       protocol: TCP
-      port: 9000
+      port: 6334
       targetPort: 6334
