@@ -6,7 +6,7 @@ The objectives of this task are as follows:
 - [x] Create a highly scalable Qdrant vector database hosted on AWS.
 - [ ] Have automatic snapshotting and backup options available. _in progress_
 - [x] Have a recovery mechanism from backup for the database.
-- [ ] Develop an efficient mechanism to ingest around 1 million records in the database.
+- [x] Develop an efficient mechanism to ingest around 1 million records in the database.
 - [x] Set up observability and performance monitoring with alerts on the system. _in progress_
 - [x] Use Terraform to spin up the required resources.
 
@@ -22,6 +22,7 @@ The objectives of this task are as follows:
 - `Aws` - Cloud Provider
 - `Kube-Prometheus` deploys the Prometheus Operator and already schedules a Prometheus
 called prometheus-k8s with alerts and rules by default.
+- `Apache Kafka` - Distributed event streaming platform, It is used for creating Data Streaming Pipeline
 
 
 ## K8s Monitoring Pods
@@ -159,3 +160,65 @@ If you want to remove the resources created by Terraform, you can use the follow
 ```
 terraform destroy
 ```
+
+## Setting up the Data Pipeline
+
+
+
+
+
+### For the Consumer
+To set up the Kafka consumer, follow these steps:
+
+1. Open a terminal or command prompt.
+2. Navigate to the `kafka_consumer` directory using the `cd` command:
+   ```bash
+   cd kafka_consumer
+   ```
+3. Build the consumer using the following command:
+   ```bash
+   go build -o out/consumer utils.go consumer.go
+   ```
+   This command will compile the code and generate the executable file named `consumer` inside the `out` directory.
+
+### For the Producer
+To set up the Kafka producer, follow these steps:
+
+1. Open a terminal or command prompt.
+2. Navigate to the `kafka_producer` directory using the `cd` command:
+   ```bash
+   cd kafka_producer
+   ```
+3. Build the producer using the following command:
+   ```bash
+   go build -o out/producer utils.go producer.go
+   ```
+   This command will compile the code and generate the executable file named `producer` inside the `out` directory.
+
+### Modifying Data Consumption
+
+By default, the data consumption value is set to 10,000 (10K) records in the `kafka_producer/producer.go` file. You can modify this value to any desired number, such as 1 million (1M), by following these steps:
+
+1. Open the `kafka_producer/producer.go` file in a text editor or code editor of your choice.
+2. Locate the following section of code within the `producer.go` file:
+
+- Currently the Cosumption value is set to 10K, it can be modified to 1Mil in `kafka_producer/producer.go` file. 
+
+```go
+for n := 0; n < 10000; n++ {
+    key := users[rand.Intn(len(users))]
+    payload := Payload{
+        ID:             n + 1,
+        City:           key,
+        Location:       "Spain",
+        CollectionName: "test_collection",
+    }
+    .
+    .
+    .
+}
+```
+3. Update the loop condition `10000` to your desired value. For example, to generate 1 million records, change it to `1000000`.
+4. Save the changes to the file.
+
+With this modification, the Kafka producer will now generate the specified number of records when executed.
