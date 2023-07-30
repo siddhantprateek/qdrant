@@ -9,6 +9,8 @@ import (
 	pb "github.com/qdrant/go-client/qdrant"
 )
 
+// @route: /all
+// @method: GET
 func GetAllCollection(c *fiber.Ctx) error {
 	_, collectionsClient, ctx, cancel := db.QdrantDBConn()
 	defer cancel()
@@ -27,6 +29,8 @@ func GetAllCollection(c *fiber.Ctx) error {
 	})
 }
 
+// @route: /collection/create
+// @method: POST
 func CreateCollection(c *fiber.Ctx) error {
 	type NewCollection struct {
 		CollectionName string `json:"collectionName"`
@@ -53,6 +57,8 @@ func CreateCollection(c *fiber.Ctx) error {
 	})
 }
 
+// @route: /field/create
+// @method: POST
 func CreateField(c *fiber.Ctx) error {
 	type CreateFieldReq struct {
 		CollectionName string `json:"collectionName"`
@@ -81,6 +87,8 @@ func CreateField(c *fiber.Ctx) error {
 }
 
 // Insert vectors into a collection
+// @route: /upsert
+// @method: POST
 func AddVectorData(c *fiber.Ctx) error {
 	type VectorPayload struct {
 		Id             int    `json:"id"`
@@ -137,6 +145,8 @@ func AddVectorData(c *fiber.Ctx) error {
 	})
 }
 
+// @route: /data/id
+// @method: POST
 func RetrieveById(c *fiber.Ctx) error {
 	type ByIdPayload struct {
 		Id             int    `json:"id"`
@@ -174,6 +184,8 @@ func RetrieveById(c *fiber.Ctx) error {
 	})
 }
 
+// @route: /collection/delete
+// @method: DELETE
 func DeleteVectorCollection(c *fiber.Ctx) error {
 	type CollectionPayload struct {
 		CollectionName string `json:"collectionName"`

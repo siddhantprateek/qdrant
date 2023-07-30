@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-func apiRoutes(routes *fiber.App) {
+func ApiRoutes(routes *fiber.App) {
 	routes.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"status":  fiber.StatusOK,
@@ -28,7 +28,7 @@ func Init() error {
 
 	app := fiber.New()
 	app.Use(logger.New())
-	apiRoutes(app)
+	ApiRoutes(app)
 
 	port := config.GetEnviron("PORT")
 	err := app.Listen(":" + port)

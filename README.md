@@ -86,6 +86,13 @@ docker build --tag qdapi .
 docker run -p 8000:8000 -e PORT=8000 -e QDRANT_ADDR=qdrant:6334 -d qdapi
 ```
 
+## To run the Application using docker-compose
+```bash
+# production
+docker-compose -f docker-compose.prod.yaml up -d 
+# development
+docker-compose up -d 
+```
 
 ```bash
 $ kubectl --namespace monitoring port-forward svc/prometheus-k8s 10000:9090 >/dev/null &

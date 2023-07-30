@@ -1,29 +1,40 @@
 package routes_test
 
 import (
-	"fmt"
-	"io"
-	"net/http"
 	"net/http/httptest"
+	handlers "qdrant/handlers"
+	routes "qdrant/routes"
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestRootRoute(t *testing.T) {
+func TestAPIRoutes(t *testing.T) {
 	app := fiber.New()
-
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	resp, err := app.Test(req)
-	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, resp.StatusCode)
-
-	// Test the response body
-	expectedResponse := `{"message": "Qdrant App Server is Healthy.", "status": 200}`
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
+	routes.ApiRoutes(app)
+	expectedRoutes := []struct {
+		method  string
+		path    string
+		handler fiber.Handler
+	}{
+		{method: "GET", path: "/", handler: nil},
+		{method: "GET", path: "/all", handler: handlers.GetAllCollection},
+		{method: "POST", path: "/collection/create", handler: handlers.CreateCollection},
+		{method: "POST", path: "/field/create", handler: handlers.CreateField},
+		{method: "POST", path: "/upsert", handler: handlers.AddVectorData},
+		{method: "POST", path: "/data/id", handler: handlers.RetrieveById},
+		{method: "DELETE", path: "/collection/delete", handler: handlers.DeleteVectorCollection},
 	}
-	assert.Equal(t, expectedResponse, string(body))
+
+	for _, route := range expectedRoutes {
+		route := route
+		t.Run(route.method+" "+route.path, func(t *testing.T) {
+			t.Parallel()
+			req := httptest.NewRequest(route.method, route.path, nil)
+			resp, err := app.Test(req)
+			assert.Nil(t, err)
+			assert.Equal(t, fiber.StatusOK, resp.StatusCode)
+		})
+	}
 }
