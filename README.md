@@ -8,7 +8,7 @@ The objectives of this task are as follows:
 - [x] Have a recovery mechanism from backup for the database.
 - [ ] Develop an efficient mechanism to ingest around 1 million records in the database.
 - [x] Set up observability and performance monitoring with alerts on the system. _in progress_
-- [ ] Use Terraform to spin up the required resources. _in progress_
+- [x] Use Terraform to spin up the required resources.
 
 
 ## Tech Stack
@@ -103,4 +103,59 @@ $ kubectl --namespace monitoring port-forward svc/grafana 20000:3000 >/dev/null 
 
 $ kubectl --namespace monitoring port-forward svc/alertmanager-main 30000:9093 >/dev/null & 
 [1] 26737
+```
+
+## To Run Terraform Code
+
+### Setting up AWS Access
+
+1. Create IAM User:
+- Log in to the AWS Management Console using an account with administrative privileges.
+- Navigate to the IAM service.
+- Click on "Users" in the left navigation pane and create a new user.
+- Add the user to a group with access to EC2. You can use an existing group with the `AmazonEC2FullAccess` policy attached, or create a custom group with the necessary EC2 permissions.
+- Take note of the Access Key ID and Secret Access Key provided during the user creation process. You will need these to configure AWS CLI access.
+
+2. Configure AWS CLI:
+  - Open a terminal or command prompt on your local machine.
+  - Run the following command and provide the Access Key ID and Secret Access Key when prompted:
+     ```bash
+     aws configure
+     ```
+
+### Running Terraform
+
+1. Clone the Repository:
+   - Clone the repository containing the Terraform code to your local machine using Git or download the code as a ZIP archive and extract it.
+
+2. Navigate to the Terraform Configuration Folder:
+   - Using the terminal or command prompt, navigate to the folder that contains the Terraform configuration files (e.g., `cd ./.terraform`).
+
+3. Initialize Terraform:
+   - Run the following command to initialize Terraform and download the necessary providers:
+     ```bash
+     terraform init
+     ```
+
+4. Plan the Terraform Deployment (Optional):
+   - It's recommended to create a Terraform plan to preview the changes before applying them. Run the following command to generate a plan:
+     ```
+     terraform plan
+     ```
+
+5. Apply the Terraform Configuration:
+   - If the plan looks good, apply the Terraform configuration to create the AWS EC2 instances. Run the following command and confirm the action:
+     ```
+     terraform apply
+     ```
+
+6. Verify the EC2 Instances:
+   - Once the Terraform apply process is complete, log in to your AWS Management Console and navigate to the EC2 service. You should see the newly created EC2 instances.
+
+### Cleaning Up
+
+If you want to remove the resources created by Terraform, you can use the following command:
+
+```
+terraform destroy
 ```
