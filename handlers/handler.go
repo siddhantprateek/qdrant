@@ -17,13 +17,13 @@ func GetAllCollection(c *fiber.Ctx) error {
 
 	r, err := collectionsClient.List(ctx, &pb.ListCollectionsRequest{})
 	if err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Could not get collections",
 			"error":   err.Error(),
 		})
 	}
 
-	return c.JSON(fiber.Map{
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{
 		"message": "Qdrant Collections",
 		"data":    r.GetCollections(),
 	})
@@ -38,7 +38,7 @@ func CreateCollection(c *fiber.Ctx) error {
 	newCollectionReq := new(NewCollection)
 
 	if err := c.BodyParser(newCollectionReq); err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": fiber.ErrBadRequest,
 			"status":  fiber.StatusBadRequest,
 		})
@@ -46,12 +46,12 @@ func CreateCollection(c *fiber.Ctx) error {
 
 	result, err := db.CreateQdCollection(newCollectionReq.CollectionName)
 	if err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Failed to create Collection: " + err.Error(),
 		})
 	}
 
-	return c.JSON(fiber.Map{
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"message": result,
 		"status":  fiber.StatusOK,
 	})
@@ -67,7 +67,7 @@ func CreateField(c *fiber.Ctx) error {
 
 	newFieldBody := new(CreateFieldReq)
 	if err := c.BodyParser(newFieldBody); err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": fiber.ErrBadRequest,
 			"status":  fiber.StatusBadRequest,
 		})
@@ -75,12 +75,12 @@ func CreateField(c *fiber.Ctx) error {
 
 	result, err := db.CreateFieldIndex(newFieldBody.CollectionName, newFieldBody.FieldName)
 	if err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Failed to create Field: " + err.Error(),
 		})
 	}
 
-	return c.JSON(fiber.Map{
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"message": result,
 		"status":  fiber.StatusOK,
 	})
@@ -99,7 +99,7 @@ func AddVectorData(c *fiber.Ctx) error {
 
 	newVectorPayload := new(VectorPayload)
 	if err := c.BodyParser(newVectorPayload); err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": fiber.ErrBadRequest,
 			"status":  fiber.StatusBadRequest,
 		})
@@ -139,7 +139,7 @@ func AddVectorData(c *fiber.Ctx) error {
 			"message": "Could not upsert points:" + err.Error(),
 		})
 	}
-	return c.JSON(fiber.Map{
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": fiber.StatusCreated,
 		"Upsert": len(upsertPoints),
 	})
@@ -155,7 +155,7 @@ func RetrieveById(c *fiber.Ctx) error {
 
 	newByIdPayload := new(ByIdPayload)
 	if err := c.BodyParser(newByIdPayload); err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "[ERROR] Couldn't parse vector id:" + err.Error(),
 		})
 	}
@@ -174,11 +174,11 @@ func RetrieveById(c *fiber.Ctx) error {
 		},
 	})
 	if err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "Could not retrieve points:" + err.Error(),
 		})
 	}
-	return c.JSON(fiber.Map{
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{
 		"status": fiber.StatusAccepted,
 		"data":   pointsById.GetResult(),
 	})
@@ -193,7 +193,7 @@ func DeleteVectorCollection(c *fiber.Ctx) error {
 	newCollectionPayload := new(CollectionPayload)
 
 	if err := c.BodyParser(newCollectionPayload); err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": fiber.ErrBadRequest,
 			"status":  fiber.StatusBadRequest,
 		})
@@ -206,12 +206,12 @@ func DeleteVectorCollection(c *fiber.Ctx) error {
 		CollectionName: newCollectionPayload.CollectionName,
 	})
 	if err != nil {
-		return c.JSON(fiber.Map{
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": fmt.Sprintf("Could not delete collection: %s", newCollectionPayload.CollectionName),
 		})
 	}
 
-	return c.JSON(fiber.Map{
+	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{
 		"status":  fiber.StatusAccepted,
 		"message": fmt.Sprintf("Collection %s deleted.", newCollectionPayload.CollectionName),
 	})
