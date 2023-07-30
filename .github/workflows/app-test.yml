@@ -31,14 +31,18 @@ jobs:
           echo ${GITHUB_WORKSPACE}
           echo ${GOPATH}
           echo ${GOROOT}
-      - name: Build
-        run: go build -v ./...
+        env:
+          GOPATH: /home/runner/work/qdrant/qdrant
 
       - name: Run Go Build
         run: go build -v ./...
+        env:
+          GOPATH: /home/runner/work/qdrant/qdrant
 
       - name: Run Go tests
         run: go test ./...
+        env:
+          GOPATH: /home/runner/work/qdrant/qdrant
 
       - name: Clean up Qdrant DB container
         run: docker stop qdrant_db_container && docker rm qdrant_db_container
