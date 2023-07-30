@@ -4,7 +4,7 @@
 
 The objectives of this task are as follows:
 - [x] Create a highly scalable Qdrant vector database hosted on AWS.
-- [ ] Have automatic snapshotting and backup options available. _in progress_
+- [ ] Have automatic snapshotting and backup options available.
 - [x] Have a recovery mechanism from backup for the database.
 - [x] Develop an efficient mechanism to ingest around 1 million records in the database.
 - [x] Set up observability and performance monitoring with alerts on the system. _in progress_
@@ -38,67 +38,84 @@ docker-compose up -d
 docker-compose -f docker-compose.prod.yaml up -d
 ```
 
+## Setting up `kube-prometheus`
+
+```bash
+git clone --recursive https://github.com/prometheus-operator/kube-prometheus
+cd kube-prometheus
+
+kubectl create -f manifests/setup
+until kubectl get servicemonitors --all-namespaces ; do date; sleep 1; echo ""; done
+kubectl create -f manifests/ 
+
+# or
+./kube_prom.sh
+```
 
 ## K8s Monitoring Pods
 ```bash
 $ kubectl get all -n monitoring  
 NAME                                       READY   STATUS    RESTARTS      AGE
-pod/alertmanager-main-0                    2/2     Running   4 (15h ago)   28h
-pod/alertmanager-main-1                    2/2     Running   4 (15h ago)   28h
-pod/alertmanager-main-2                    2/2     Running   4 (15h ago)   28h
-pod/blackbox-exporter-7d8c77d7b9-p4txc     3/3     Running   6 (15h ago)   28h
-pod/grafana-79f47474f7-tsrpc               1/1     Running   2 (15h ago)   28h
-pod/kube-state-metrics-8cc8f7df6-wslgq     3/3     Running   7 (34s ago)   28h
-pod/node-exporter-bd97l                    2/2     Running   4 (15h ago)   28h
-pod/prometheus-adapter-6b88dfd544-4rr57    1/1     Running   3 (30s ago)   28h
-pod/prometheus-adapter-6b88dfd544-vhb98    1/1     Running   2 (15h ago)   28h
-pod/prometheus-k8s-0                       2/2     Running   4 (15h ago)   28h
-pod/prometheus-k8s-1                       2/2     Running   4 (15h ago)   28h
-pod/prometheus-operator-557b4f4977-q76cz   2/2     Running   6 (35s ago)   28h
-pod/qdapi-5d75cd7567-dts5m                 1/1     Running   1 (15h ago)   18h
-pod/qdapi-5d75cd7567-m42l4                 1/1     Running   1 (15h ago)   18h
-pod/qdapi-5d75cd7567-px9zf                 1/1     Running   1 (15h ago)   18h
-pod/qdrant-db-0                            1/1     Running   1 (15h ago)   24h
-pod/qdrant-db-1                            1/1     Running   1 (15h ago)   24h
-pod/qdrant-db-2                            1/1     Running   1 (15h ago)   24h
+pod/alertmanager-main-0                    2/2     Running   4 (17h ago)   29h
+pod/alertmanager-main-1                    2/2     Running   4 (17h ago)   29h
+pod/alertmanager-main-2                    2/2     Running   4 (17h ago)   29h
+pod/blackbox-exporter-7d8c77d7b9-p4txc     3/3     Running   6 (17h ago)   29h
+pod/grafana-79f47474f7-tsrpc               1/1     Running   2 (17h ago)   29h
+pod/kube-state-metrics-8cc8f7df6-wslgq     3/3     Running   7 (86m ago)   29h
+pod/node-exporter-bd97l                    2/2     Running   4 (17h ago)   29h
+pod/prometheus-adapter-6b88dfd544-4rr57    1/1     Running   3 (86m ago)   29h
+pod/prometheus-adapter-6b88dfd544-vhb98    1/1     Running   2 (17h ago)   29h
+pod/prometheus-k8s-0                       2/2     Running   4 (17h ago)   29h
+pod/prometheus-k8s-1                       2/2     Running   4 (17h ago)   29h
+pod/prometheus-operator-557b4f4977-q76cz   2/2     Running   6 (86m ago)   29h
+pod/qdapi-5fdb7df48b-cjfrz                 1/1     Running   0             31m
+pod/qdapi-5fdb7df48b-s9l5x                 1/1     Running   0             31m
+pod/qdapi-5fdb7df48b-wl82n                 1/1     Running   0             31m
+pod/qdrant-db-0                            1/1     Running   0             44m
+pod/qdrant-db-1                            1/1     Running   0             44m
+pod/qdrant-db-2                            1/1     Running   0             44m
 
 NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
-service/alertmanager-main       ClusterIP   10.108.137.87    <none>        9093/TCP,8080/TCP            28h
-service/alertmanager-operated   ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   28h
-service/blackbox-exporter       ClusterIP   10.103.243.118   <none>        9115/TCP,19115/TCP           28h
-service/grafana                 ClusterIP   10.96.214.152    <none>        3000/TCP                     28h
-service/kube-state-metrics      ClusterIP   None             <none>        8443/TCP,9443/TCP            28h
-service/node-exporter           ClusterIP   None             <none>        9100/TCP                     28h
-service/prometheus-adapter      ClusterIP   10.107.130.104   <none>        443/TCP                      28h
-service/prometheus-k8s          ClusterIP   10.106.89.198    <none>        9090/TCP,8080/TCP            28h
-service/prometheus-operated     ClusterIP   None             <none>        9090/TCP                     28h
-service/prometheus-operator     ClusterIP   None             <none>        8443/TCP                     28h
-service/qdapi                   ClusterIP   10.102.29.204    <none>        8000/TCP                     18h
-service/qdrant-db-service       ClusterIP   10.111.19.159    <none>        80/TCP,9000/TCP              23h
+service/alertmanager-main       ClusterIP   10.108.137.87    <none>        9093/TCP,8080/TCP            29h
+service/alertmanager-operated   ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   29h
+service/blackbox-exporter       ClusterIP   10.103.243.118   <none>        9115/TCP,19115/TCP           29h
+service/grafana                 ClusterIP   10.96.214.152    <none>        3000/TCP                     29h
+service/kube-state-metrics      ClusterIP   None             <none>        8443/TCP,9443/TCP            29h
+service/node-exporter           ClusterIP   None             <none>        9100/TCP                     29h
+service/prometheus-adapter      ClusterIP   10.107.130.104   <none>        443/TCP                      29h
+service/prometheus-k8s          ClusterIP   10.106.89.198    <none>        9090/TCP,8080/TCP            29h
+service/prometheus-operated     ClusterIP   None             <none>        9090/TCP                     29h
+service/prometheus-operator     ClusterIP   None             <none>        8443/TCP                     29h
+service/qdapi                   ClusterIP   10.104.190.99    <none>        80/TCP                       45m
+service/qdrant-db               ClusterIP   10.99.231.223    <none>        6333/TCP,6334/TCP            31m
 
 NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
-daemonset.apps/node-exporter   1         1         1       1            1           kubernetes.io/os=linux   28h
+daemonset.apps/node-exporter   1         1         1       1            1           kubernetes.io/os=linux   29h
 
 NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/blackbox-exporter     1/1     1            1           28h
-deployment.apps/grafana               1/1     1            1           28h
-deployment.apps/kube-state-metrics    1/1     1            1           28h
-deployment.apps/prometheus-adapter    2/2     2            2           28h
-deployment.apps/prometheus-operator   1/1     1            1           28h
-deployment.apps/qdapi                 3/3     3            3           18h
+deployment.apps/blackbox-exporter     1/1     1            1           29h
+deployment.apps/grafana               1/1     1            1           29h
+deployment.apps/kube-state-metrics    1/1     1            1           29h
+deployment.apps/prometheus-adapter    2/2     2            2           29h
+deployment.apps/prometheus-operator   1/1     1            1           29h
+deployment.apps/qdapi                 3/3     3            3           45m
 
 NAME                                             DESIRED   CURRENT   READY   AGE
-replicaset.apps/blackbox-exporter-7d8c77d7b9     1         1         1       28h
-replicaset.apps/grafana-79f47474f7               1         1         1       28h
-replicaset.apps/kube-state-metrics-8cc8f7df6     1         1         1       28h
-replicaset.apps/prometheus-adapter-6b88dfd544    2         2         2       28h
-replicaset.apps/prometheus-operator-557b4f4977   1         1         1       28h
-replicaset.apps/qdapi-5d75cd7567                 3         3         3       18h
+replicaset.apps/blackbox-exporter-7d8c77d7b9     1         1         1       29h
+replicaset.apps/grafana-79f47474f7               1         1         1       29h
+replicaset.apps/kube-state-metrics-8cc8f7df6     1         1         1       29h
+replicaset.apps/prometheus-adapter-6b88dfd544    2         2         2       29h
+replicaset.apps/prometheus-operator-557b4f4977   1         1         1       29h
+replicaset.apps/qdapi-5fdb7df48b                 3         3         3       31m
+replicaset.apps/qdapi-69d5bfcc99                 0         0         0       45m
 
 NAME                                 READY   AGE
-statefulset.apps/alertmanager-main   3/3     28h
-statefulset.apps/prometheus-k8s      2/2     28h
-statefulset.apps/qdrant-db           3/3     24h
+statefulset.apps/alertmanager-main   3/3     29h
+statefulset.apps/prometheus-k8s      2/2     29h
+statefulset.apps/qdrant-db           3/3     44m
+
+NAME                           SCHEDULE    SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/qdrant-cronjob   0 0 * * *   False     0        <none>          4s
 ```
 
 
@@ -145,6 +162,37 @@ spec:
           storage: 10Gi
 ```
 
+## For automatic snapshotting and backup options
+
+```yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: qdrant-cronjob
+spec:
+  schedule: "0 0 * * *" # Run once a day at midnight
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: qdrant-db
+            image: qdrant:qdrant
+            imagePullPolicy: IfNotPresent
+            ports:
+            - containerPort: 6333
+              name: web
+            - containerPort: 6334
+              name: grpc 
+          restartPolicy: OnFailure
+```
+
+- @yearly (or @annually)	Run once a year at midnight of 1 January	`0 0 1 1 *``
+- @monthly	Run once a month at midnight of the first day of the month	`0 0 1 * *``
+- @weekly	Run once a week at midnight on Sunday morning	`0 0 * * 0`
+- @daily (or @midnight)	Run once a day at midnight	`0 0 * * *`
+- @hourly	Run once an hour at the beginning of the hour	`0 * * * *`
+
 ```bash
 docker build --tag qdapi .
 docker run -p 8000:8000 -e PORT=8000 -e QDRANT_ADDR=qdrant:6334 -d qdapi
@@ -158,16 +206,33 @@ docker-compose -f docker-compose.prod.yaml up -d
 docker-compose up -d 
 ```
 
+
+## Set up the port forwarding manually
+
 ```bash
-$ kubectl --namespace monitoring port-forward svc/prometheus-k8s 10000:9090 >/dev/null &
-[1] 26130
+kubectl --namespace monitoring port-forward svc/prometheus-k8s 10000:9090 >/dev/null &
+kubectl --namespace monitoring port-forward svc/grafana 20000:3000 >/dev/null &
+kubectl --namespace monitoring port-forward svc/alertmanager-main 30000:9093 >/dev/null & 
+kubectl --namespace monitoring port-forward svc/qdapi 8080:80 >/dev/null &
+kubectl --namespace monitoring port-forward svc/qdrant-db 6334:6334 >/dev/null &
 
-$ kubectl --namespace monitoring port-forward svc/grafana 20000:3000 >/dev/null &
-[2] 26394
-
-$ kubectl --namespace monitoring port-forward svc/alertmanager-main 30000:9093 >/dev/null & 
-[1] 26737
+# or 
+# Use the provided script to automate port forwarding
+./portforwarding.sh
 ```
+
+### Accessing Services
+Once the port forwarding is set up, you can access the following services on your local machine:
+
+Grafana Dashboard: http://localhost:20000
+
+Use this link to access the Grafana dashboard, where you can view various monitoring and analytics visualizations.
+Application API: http://localhost:8080
+
+Use this link to access the application's API, allowing you to interact with the application programmatically.
+Prometheus Dashboard: http://localhost:10000
+
+Use this link to access the Prometheus dashboard, where you can explore and monitor various metrics collected by Prometheus.
 
 ## To Run Terraform Code
 
@@ -225,9 +290,6 @@ terraform destroy
 ```
 
 ## Setting up the Data Pipeline
-
-
-
 
 
 ### For the Consumer
