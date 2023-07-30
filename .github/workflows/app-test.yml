@@ -27,7 +27,7 @@ jobs:
       - name: Build and run Qdrant DB container
         run: |
           docker pull qdrant/qdrant
-          docker run -d --name qdrant_db_container -p 6334:6334 -p 6333:6333 -e QDRANT__SERVICE__GRPC_PORT=6334 qdrant/qdrant
+          docker run -p 6333:6333 qdrant/qdrant
 
       - name: Wait for Qdrant DB to be ready
         run: sleep 10
