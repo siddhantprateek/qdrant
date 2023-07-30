@@ -192,6 +192,9 @@ spec:
               name: web
             - containerPort: 6334
               name: grpc 
+            volumeMounts:
+            - name: qdrant-dump
+              mountPath: /data
           restartPolicy: OnFailure
 ```
 
