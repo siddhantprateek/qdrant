@@ -20,7 +20,7 @@ func TestGetAllCollection(t *testing.T) {
 	resp, err := app.Test(req)
 
 	assert.Nil(t, err)
-	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, http.StatusAccepted, resp.StatusCode)
 }
 
 func TestCreateCollection(t *testing.T) {
@@ -29,7 +29,7 @@ func TestCreateCollection(t *testing.T) {
 
 	// request payload.
 	payload := map[string]interface{}{
-		"collectionName": "test_collection",
+		"collectionName": "test_collection_15",
 	}
 	body, _ := json.Marshal(payload)
 	req := httptest.NewRequest(http.MethodPost, "/collections", bytes.NewReader(body))
@@ -38,5 +38,5 @@ func TestCreateCollection(t *testing.T) {
 	resp, err := app.Test(req)
 
 	assert.Nil(t, err)
-	assert.Equal(t, http.StatusOK, resp.StatusCode)
+	assert.Equal(t, http.StatusCreated, resp.StatusCode)
 }
