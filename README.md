@@ -129,6 +129,8 @@ With this configuration, the Qdrant vector database instances will have their da
 
 - In the case of a StatefulSet with a master-slave configuration, the master Pod is responsible for handling write operations to the data storage, while the slave Pods can read from the storage. This configuration ensures data consistency, as only one Pod is writing to the data at a time.
 
+![](./assets/qdrant-stateful.png)
+
 ```yaml
 apiVersion: apps/v1
 kind: StatefulSet
