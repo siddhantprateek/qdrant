@@ -308,6 +308,56 @@ terraform destroy
 
 ![](./assets/minikube-dash.png)
 
+## API Documentation
+
+- Get All the Collection Created
+  ```js
+  GET {{ baseURL }}/all
+  ```
+
+- Create Collection
+  ```js
+  POST {{ baseURL }}/all
+  ```
+  ```json
+  {
+      "collectionName": "test_collection"
+  }
+  ```
+- Create Field Inside Collection
+  ```js
+  POST {{ baseURL }}/field/create
+  ```
+  ```json
+  {
+      "collectionName": "test_collection",
+      "fieldName": "location"
+  }
+  ```
+
+- Insert Data into Collection
+  ```js
+  POST {{ baseURL }}/upsert
+  ```
+  ```json
+  {
+      "id": 2,
+      "city": "New York",
+      "location": "Washington DC",
+      "collectionName": "test_collection"
+  }
+  ```
+
+- DeleteCollection
+  ```js
+  DELETE {{ baseURL }}/collection/delete
+  ```
+  ```json
+  {
+      "collectionName": "test_collection"
+  }
+  ```
+
 ## Setting up the Data Pipeline
 
 
