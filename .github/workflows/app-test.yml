@@ -23,10 +23,7 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.20
-
-      - name: Build and run Qdrant DB container
-        run: docker pull qdrant/qdrant; docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
-
+          
       - name: Wait for Qdrant DB to be ready
         run: sleep 10
 
