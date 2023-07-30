@@ -20,6 +20,6 @@ spec:
         - containerPort: 80
         env:
         - name: QDRANT_ADDR
-          value: qdrant:6334
+          value: qdrant-db:6334
         - name: PORT
           value: "80"

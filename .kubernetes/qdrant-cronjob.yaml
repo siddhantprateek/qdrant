@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: qdrant-cronjob
+  namespace: monitoring
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: qdrant-db
+            image: qdrant:qdrant
+            imagePullPolicy: IfNotPresent
+            ports:
+            - containerPort: 6333
+              name: web
+            - containerPort: 6334
+              name: grpc 
+          restartPolicy: OnFailure
