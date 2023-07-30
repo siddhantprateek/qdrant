@@ -347,7 +347,16 @@ terraform destroy
       "collectionName": "test_collection"
   }
   ```
-
+- Get Data by Id
+  ```js
+  POST {{ baseURL }}/data/id
+  ```
+  ```json
+  {
+      "id": 2,
+      "collectionName": "test_collection"
+  }
+  ```
 - DeleteCollection
   ```js
   DELETE {{ baseURL }}/collection/delete
