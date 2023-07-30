@@ -27,8 +27,8 @@ jobs:
       - name: Wait for Qdrant DB to be ready
         run: sleep 10
 
-      - name: Resolving Go dependencing
-        run: go mod tidy
+      - name: Run Go Build
+        run: go build -v ./...
 
       - name: Run Go tests
         run: go test ./...
