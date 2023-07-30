@@ -4,7 +4,7 @@
 
 The objectives of this task are as follows:
 - [x] Create a highly scalable Qdrant vector database hosted on AWS.
-- [ ] Have automatic snapshotting and backup options available.
+- [x] Have automatic snapshotting and backup options available.
 - [x] Have a recovery mechanism from backup for the database.
 - [x] Develop an efficient mechanism to ingest around 1 million records in the database.
 - [x] Set up observability and performance monitoring with alerts on the system. _in progress_
