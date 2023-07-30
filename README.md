@@ -125,6 +125,10 @@ In the StatefulSet configuration, I have used `volumeClaimTemplates` section to 
 
 With this configuration, the Qdrant vector database instances will have their data persisted across restarts and rescheduling events, providing data durability and stability for your deployment.
 
+- When using StatefulSets, you can request persistent storage using Persistent Volume Claims (PVCs). Each Pod in the StatefulSet can have its own PVC, which can be backed by a Persistent Volume (PV). The PVs are independent of the Pods and their lifecycle, so if a Pod fails, the PV and the data it holds will remain intact.
+
+- In the case of a StatefulSet with a master-slave configuration, the master Pod is responsible for handling write operations to the data storage, while the slave Pods can read from the storage. This configuration ensures data consistency, as only one Pod is writing to the data at a time.
+
 ```yaml
 apiVersion: apps/v1
 kind: StatefulSet
@@ -163,6 +167,8 @@ spec:
 ```
 
 ## For automatic snapshotting and backup options
+
+Kubernetes will generate a Job based on the schedule provided in the CronJob. The Job will run the container with the specified image at the scheduled time and take snapshots of the `qdrant-db`.
 
 ```yaml
 apiVersion: batch/v1
