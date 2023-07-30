@@ -24,6 +24,20 @@ The objectives of this task are as follows:
 called prometheus-k8s with alerts and rules by default.
 - `Apache Kafka` - Distributed event streaming platform, It is used for creating Data Streaming Pipeline
 
+## Setting up the Application using `docker-compose`
+
+- To start the application in the local environment, execute the following command:
+
+```bash
+# for local enivronment
+docker-compose up -d 
+```
+- If you want to deploy the application in a production environment, use the production-specific Docker Compose configuration file by executing the following command:
+```bash
+# for production environment
+docker-compose -f docker-compose.prod.yaml up -d
+```
+
 
 ## K8s Monitoring Pods
 ```bash
