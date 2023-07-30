@@ -41,15 +41,64 @@ docker-compose -f docker-compose.prod.yaml up -d
 
 ## K8s Monitoring Pods
 ```bash
-$ kubectl get pods -n monitoring  
-NAME                                   READY   STATUS              RESTARTS   AGE
-blackbox-exporter-7d8c77d7b9-p4txc     0/3     ContainerCreating   0          31s
-grafana-79f47474f7-tsrpc               0/1     Running             0          30s
-kube-state-metrics-8cc8f7df6-wslgq     0/3     ContainerCreating   0          30s
-node-exporter-bd97l                    0/2     ContainerCreating   0          29s
-prometheus-adapter-6b88dfd544-4rr57    0/1     ContainerCreating   0          29s
-prometheus-adapter-6b88dfd544-vhb98    0/1     ContainerCreating   0          29s
-prometheus-operator-557b4f4977-q76cz   0/2     ContainerCreating   0          29s
+$ kubectl get all -n monitoring  
+NAME                                       READY   STATUS    RESTARTS      AGE
+pod/alertmanager-main-0                    2/2     Running   4 (15h ago)   28h
+pod/alertmanager-main-1                    2/2     Running   4 (15h ago)   28h
+pod/alertmanager-main-2                    2/2     Running   4 (15h ago)   28h
+pod/blackbox-exporter-7d8c77d7b9-p4txc     3/3     Running   6 (15h ago)   28h
+pod/grafana-79f47474f7-tsrpc               1/1     Running   2 (15h ago)   28h
+pod/kube-state-metrics-8cc8f7df6-wslgq     3/3     Running   7 (34s ago)   28h
+pod/node-exporter-bd97l                    2/2     Running   4 (15h ago)   28h
+pod/prometheus-adapter-6b88dfd544-4rr57    1/1     Running   3 (30s ago)   28h
+pod/prometheus-adapter-6b88dfd544-vhb98    1/1     Running   2 (15h ago)   28h
+pod/prometheus-k8s-0                       2/2     Running   4 (15h ago)   28h
+pod/prometheus-k8s-1                       2/2     Running   4 (15h ago)   28h
+pod/prometheus-operator-557b4f4977-q76cz   2/2     Running   6 (35s ago)   28h
+pod/qdapi-5d75cd7567-dts5m                 1/1     Running   1 (15h ago)   18h
+pod/qdapi-5d75cd7567-m42l4                 1/1     Running   1 (15h ago)   18h
+pod/qdapi-5d75cd7567-px9zf                 1/1     Running   1 (15h ago)   18h
+pod/qdrant-db-0                            1/1     Running   1 (15h ago)   24h
+pod/qdrant-db-1                            1/1     Running   1 (15h ago)   24h
+pod/qdrant-db-2                            1/1     Running   1 (15h ago)   24h
+
+NAME                            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+service/alertmanager-main       ClusterIP   10.108.137.87    <none>        9093/TCP,8080/TCP            28h
+service/alertmanager-operated   ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP   28h
+service/blackbox-exporter       ClusterIP   10.103.243.118   <none>        9115/TCP,19115/TCP           28h
+service/grafana                 ClusterIP   10.96.214.152    <none>        3000/TCP                     28h
+service/kube-state-metrics      ClusterIP   None             <none>        8443/TCP,9443/TCP            28h
+service/node-exporter           ClusterIP   None             <none>        9100/TCP                     28h
+service/prometheus-adapter      ClusterIP   10.107.130.104   <none>        443/TCP                      28h
+service/prometheus-k8s          ClusterIP   10.106.89.198    <none>        9090/TCP,8080/TCP            28h
+service/prometheus-operated     ClusterIP   None             <none>        9090/TCP                     28h
+service/prometheus-operator     ClusterIP   None             <none>        8443/TCP                     28h
+service/qdapi                   ClusterIP   10.102.29.204    <none>        8000/TCP                     18h
+service/qdrant-db-service       ClusterIP   10.111.19.159    <none>        80/TCP,9000/TCP              23h
+
+NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+daemonset.apps/node-exporter   1         1         1       1            1           kubernetes.io/os=linux   28h
+
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/blackbox-exporter     1/1     1            1           28h
+deployment.apps/grafana               1/1     1            1           28h
+deployment.apps/kube-state-metrics    1/1     1            1           28h
+deployment.apps/prometheus-adapter    2/2     2            2           28h
+deployment.apps/prometheus-operator   1/1     1            1           28h
+deployment.apps/qdapi                 3/3     3            3           18h
+
+NAME                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/blackbox-exporter-7d8c77d7b9     1         1         1       28h
+replicaset.apps/grafana-79f47474f7               1         1         1       28h
+replicaset.apps/kube-state-metrics-8cc8f7df6     1         1         1       28h
+replicaset.apps/prometheus-adapter-6b88dfd544    2         2         2       28h
+replicaset.apps/prometheus-operator-557b4f4977   1         1         1       28h
+replicaset.apps/qdapi-5d75cd7567                 3         3         3       18h
+
+NAME                                 READY   AGE
+statefulset.apps/alertmanager-main   3/3     28h
+statefulset.apps/prometheus-k8s      2/2     28h
+statefulset.apps/qdrant-db           3/3     24h
 ```
 
 
