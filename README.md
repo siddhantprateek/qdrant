@@ -289,6 +289,19 @@ If you want to remove the resources created by Terraform, you can use the follow
 terraform destroy
 ```
 
+## Grafana Dashboard 
+
+- Screenshot of Grafana visualization dashboard.
+- Tha `dashboard.yaml` file present in `grafana` directory 
+
+![](./assets/grafana-dashboard.png)
+
+## Minikube Dashboard
+
+- Screenshot of Minikube dashboard visualization.
+
+![](./assets/minikube-dash.png)
+
 ## Setting up the Data Pipeline
 
 
