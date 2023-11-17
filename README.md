@@ -10,6 +10,9 @@ The objectives of this task are as follows:
 - [x] Set up observability and performance monitoring with alerts on the system. 
 - [x] Use Terraform to spin up the required resources.
 
+## Architecture Design
+
+![](/assets/qdrant-arch.png)
 
 ## Tech Stack
 
