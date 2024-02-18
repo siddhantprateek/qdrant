@@ -21,6 +21,9 @@ jobs:
         with:
           repository: siddhantprateek/qdrant
       
+      - name: Start Docker Compose services
+        run: docker-compose -f docker-compose.yml up -d
+      
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -29,5 +32,5 @@ jobs:
       - name: Run Go tests
         run: go test ./...
 
-      - name: Clean up Qdrant DB container
-        run: docker stop qdrant_db_container && docker rm qdrant_db_container
+      - name: Clean up Docker Compose services
+        run: docker-compose -f docker-compose.yml down

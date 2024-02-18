@@ -24,7 +24,7 @@ func TestQdrantDBConn(t *testing.T) {
 
 	assert.Equal(t, expectedAddr, conn.Target())
 
-	collectionName := "test_collection_15"
+	collectionName := "test_collection_18"
 	_, err := collectionsClient.Create(ctx, &pb.CreateCollection{
 		CollectionName: collectionName,
 		VectorsConfig: &pb.VectorsConfig{Config: &pb.VectorsConfig_Params{
