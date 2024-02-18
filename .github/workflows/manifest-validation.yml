@@ -1,0 +1,14 @@
+name: Kubeconform - Kubernetes manifests validation
+
+on: push
+
+jobs:
+  kubeconform:
+    
+    runs-on: ubuntu-latest
+    container: deck15/kubeval-tools:latest
+    
+    steps:
+      - name: Run in container
+        run: |
+          kubeconform -summary .kubernetes/
