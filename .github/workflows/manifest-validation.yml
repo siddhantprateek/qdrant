@@ -9,6 +9,13 @@ jobs:
     container: deck15/kubeval-tools:latest
     
     steps:
-      - name: Run in container
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Copy Kubernetes files into container
         run: |
-          kubeconform -summary .kubernetes/
+          cp -r ./kubernetes/* $GITHUB_WORKSPACE/.kubernetes/
+
+      - name: Run Kubeconform
+        run: |
+          kubeconform -summary $GITHUB_WORKSPACE/.kubernetes/
