@@ -12,10 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Copy Kubernetes files into container
-        run: |
-          cp -r .kubernetes/* $GITHUB_WORKSPACE/.kubernetes/
-
       - name: Run Kubeconform
         run: |
           kubeconform -summary $GITHUB_WORKSPACE/.kubernetes/
