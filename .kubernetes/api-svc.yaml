@@ -1,3 +1,4 @@
+# type: ClusterIP - default Service type
 apiVersion: v1
 kind: Service
 metadata:

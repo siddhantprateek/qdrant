@@ -18,8 +18,7 @@ spec:
         image: siddhantprateek/qdapi
         ports:
         - containerPort: 80
-        env:
-        - name: QDRANT_ADDR
-          value: qdrant-db:6334
-        - name: PORT
-          value: "80"
+        envFrom:
+        - configMapRef:
+            name: qdapi-cfgmap
+

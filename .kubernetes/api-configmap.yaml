@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qdapi-cfgmap
+  namespace: monitoring
+data:
+  QDRANT_ADDR: "qdrant-db:6334"
+  PORT: "80"
