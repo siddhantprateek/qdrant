@@ -6,15 +6,6 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
-    services:
-      qdrant_db:
-        image: qdrant/qdrant
-        env:
-          QDRANT__SERVICE__GRPC_PORT: 6334
-        ports:
-          - 6334:6334
-          - 6333:6333
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
