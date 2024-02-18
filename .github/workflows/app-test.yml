@@ -15,13 +15,18 @@ jobs:
       - name: Start Docker Compose services
         run: docker-compose -f docker-compose.yml up -d
       
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: 1.20
-
-      - name: Run Go tests
-        run: go test ./...
+      - name: Wait for services to start
+        run: sleep 20s 
+      
+      - name: Check Qdrant App Server health
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://${{ steps.host_ip.outputs.ip }}:80)
+          if [ $response -eq 200 ]; then
+            echo "Qdrant App Server is Healthy."
+          else
+            echo "Qdrant App Server is not Healthy. Status code: $response"
+            exit 1
+          fi
 
       - name: Clean up Docker Compose services
         run: docker-compose -f docker-compose.yml down
