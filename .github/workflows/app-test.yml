@@ -20,7 +20,7 @@ jobs:
       
       - name: Check Qdrant App Server health
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" http://${{ steps.host_ip.outputs.ip }}:80)
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:80)
           if [ $response -eq 200 ]; then
             echo "Qdrant App Server is Healthy."
           else
