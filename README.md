@@ -1,5 +1,9 @@
 # Qdrant 
 
+[![Build and Test Qdrant](https://github.com/siddhantprateek/qdrant/actions/workflows/app-test.yml/badge.svg)](https://github.com/siddhantprateek/qdrant/actions/workflows/app-test.yml)
+[![Publish Docker Image workflow](https://github.com/siddhantprateek/qdrant/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/siddhantprateek/qdrant/actions/workflows/docker-publish.yml)
+[![Manifest Validation](https://github.com/siddhantprateek/qdrant/actions/workflows/manifest-validation.yml/badge.svg)](https://github.com/siddhantprateek/qdrant/actions/workflows/manifest-validation.yml)
+
 ## Objective
 
 The objectives of this task are as follows:
