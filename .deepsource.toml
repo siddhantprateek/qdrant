@@ -1,6 +1,12 @@
 version = 1
 
 [[analyzers]]
+name = "shell"
+
+[[analyzers]]
+name = "docker"
+
+[[analyzers]]
 name = "terraform"
 
 [[analyzers]]
