@@ -3,11 +3,16 @@ pipeline {
   stages {
 
     stage('Git Checkout repo') {
-      git 'https://github.com/siddhantprateek/qdrant.git'
+      steps {
+
+        git 'https://github.com/siddhantprateek/qdrant.git'
+      }
     }
 
     stage('Setup Go') {
-      echo 'Qdrant Project'
+      steps {
+        echo 'Qdrant Project'
+      }
     }
 
   }
