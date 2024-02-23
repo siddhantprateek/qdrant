@@ -30,6 +30,7 @@ The objectives of this task are as follows:
 - `Kube-Prometheus` deploys the Prometheus Operator and already schedules a Prometheus
 called prometheus-k8s with alerts and rules by default.
 - `Apache Kafka` - Distributed event streaming platform, It is used for creating Data Streaming Pipeline
+- `Trivy` - security scanner
 
 ## Setting up the Application using `docker-compose`
 
